@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BookTracker | Minha estante</title>
+  <meta name="description" content="Registre livros lidos, em leitura e na lista de desejos, com avaliação, resenha e progresso de páginas por dia.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topo">
+    <div class="topo__in">
+      <p class="marca">Book<i>Tracker</i></p>
+      <button class="btn" id="novo">+ Adicionar livro</button>
+    </div>
+  </header>
+
+  <main class="app">
+    <section class="painel">
+      <div class="meta-ano">
+        <p class="rotulo">Meta de <span id="ano"></span></p>
+        <p class="meta-num"><strong id="lidos-ano">0</strong> de <button class="link-meta" id="editar-meta" title="Alterar meta"><span id="meta">12</span> livros</button></p>
+        <div class="barra"><i id="barra-meta"></i></div>
+        <p class="nota" id="meta-txt"></p>
+      </div>
+      <div class="ritmo">
+        <div class="ritmo__topo"><p class="rotulo">Páginas por dia · últimos 14 dias</p><span id="media-dia"></span></div>
+        <div class="grafico" id="grafico" role="img"></div>
+      </div>
+      <dl class="numeros">
+        <div><dt>páginas lidas</dt><dd id="n-paginas">0</dd></div>
+        <div><dt>dias seguidos</dt><dd id="n-seq">0</dd></div>
+        <div><dt>nota média</dt><dd id="n-nota">—</dd></div>
+      </dl>
+    </section>
+
+    <section class="lendo" id="lendo-sec">
+      <h2>Lendo agora</h2>
+      <div class="lendo__lista" id="lendo"></div>
+    </section>
+
+    <section>
+      <div class="abas" role="tablist" aria-label="Estantes">
+        <button role="tab" data-estante="lido" aria-selected="true">Lidos <span id="c-lido"></span></button>
+        <button role="tab" data-estante="quero" aria-selected="false">Quero ler <span id="c-quero"></span></button>
+        <button role="tab" data-estante="todos" aria-selected="false">Todos <span id="c-todos"></span></button>
+      </div>
+      <div class="filtro"><label class="sr" for="busca">Buscar</label><input id="busca" type="search" placeholder="Buscar por título ou autor…"></div>
+      <ul class="estante" id="estante"></ul>
+    </section>
+  </main>
+
+  <dialog id="dlg-livro" aria-labelledby="dl-titulo">
+    <form method="dialog" id="form-livro">
+      <h2 id="dl-titulo">Adicionar livro</h2>
+      <label>Título<input id="f-titulo" required maxlength="90"></label>
+      <label>Autor(a)<input id="f-autor" maxlength="60"></label>
+      <div class="linha">
+        <label>Páginas<input id="f-paginas" type="number" min="1" max="5000" required></label>
+        <label>Gênero<input id="f-genero" maxlength="30" list="generos" placeholder="Romance, fantasia…"></label>
+      </div>
+      <datalist id="generos"><option>Romance</option><option>Fantasia</option><option>Ficção científica</option><option>Suspense</option><option>Biografia</option><option>Autoajuda</option><option>Negócios</option><option>Clássico</option><option>Tecnologia</option><option>Poesia</option></datalist>
+      <fieldset class="status"><legend>Estante</legend>
+        <label><input type="radio" name="status" value="quero"><span>Quero ler</span></label>
+        <label><input type="radio" name="status" value="lendo" checked><span>Lendo</span></label>
+        <label><input type="radio" name="status" value="lido"><span>Lido</span></label>
+      </fieldset>
+      <div class="so-lido">
+        <fieldset><legend>Avaliação</legend><div class="estrelas" id="f-estrelas"></div></fieldset>
+        <label>Terminei em<input id="f-fim" type="date"></label>
+        <label>Resenha pessoal<textarea id="f-resenha" rows="4" maxlength="1500" placeholder="O que você achou?"></textarea></label>
+      </div>
+      <div class="acoes">
+        <button type="button" class="link perigo" id="f-excluir" hidden>Excluir livro</button>
+        <button value="cancelar" formnovalidate class="btn sec">Cancelar</button>
+        <button value="salvar" class="btn">Salvar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="dlg-leitura" aria-labelledby="dr-titulo">
+    <form method="dialog" id="form-leitura">
+      <h2 id="dr-titulo">Registrar leitura</h2>
+      <p class="nota" id="dr-livro"></p>
+      <div class="linha">
+        <label>Parei na página<input id="r-pagina" type="number" min="0" required></label>
+        <label>Data<input id="r-data" type="date" required></label>
+      </div>
+      <p class="calc" id="r-calc"></p>
+      <div class="acoes"><button value="cancelar" formnovalidate class="btn sec">Cancelar</button><button value="salvar" class="btn">Salvar</button></div>
+    </form>
+  </dialog>
+  <div class="toast" id="toast" role="status" hidden></div>
+  <script src="js/script.js"></script>
+</body>
+</html>
